@@ -42,8 +42,4 @@ public class PostRepositoryImpl implements PostRepository {
   public void removeById(long id) {
     posts.remove(id);
   }
-
-  public ConcurrentHashMap<Long, Post> getPosts() {
-    return posts;
-  }
 }
