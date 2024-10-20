@@ -17,11 +17,12 @@ public class PostRepositoryImpl implements PostRepository {
   private final AtomicLong postId = new AtomicLong(1);
 
   public List<Post> all() {
-    return new ArrayList<>(posts.values());
+    return new ArrayList<>(posts.values()).stream().filter(post -> !post.isDeleted()).toList();
   }
 
   public Optional<Post> getById(long id) {
     if (!posts.containsKey(id)) throw new NotFoundException();
+    if (posts.get(id).isDeleted()) throw new NotFoundException();
     return Optional.ofNullable(posts.get(id));
   }
 
@@ -40,6 +41,8 @@ public class PostRepositoryImpl implements PostRepository {
   }
 
   public void removeById(long id) {
-    posts.remove(id);
+    if (!posts.containsKey(id)) throw new NotFoundException();
+    if (posts.get(id).isDeleted()) throw new NotFoundException();
+    posts.get(id).setDeleted(true);
   }
 }
