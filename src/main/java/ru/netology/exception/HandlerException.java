@@ -12,7 +12,5 @@ public class HandlerException {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     @ResponseBody
-    public String handleNotFoundException(NotFoundException e) {
-        return "404 not found: " + e.getMessage();
-    }
+    public void handleNotFoundException() {}
 }
